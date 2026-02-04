@@ -1,0 +1,20 @@
+[2.621s] Invoking command in '/home/ems/Documents/PSD/build/control': PYTHONPATH=/home/ems/Documents/PSD/build/control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ems/Documents/PSD/install/control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ems/Documents/PSD/build/control/build --no-deps symlink_data
+[3.337s] running develop
+[3.821s] running egg_info
+[3.821s] writing control.egg-info/PKG-INFO
+[3.822s] writing dependency_links to control.egg-info/dependency_links.txt
+[3.823s] writing entry points to control.egg-info/entry_points.txt
+[3.823s] writing requirements to control.egg-info/requires.txt
+[3.823s] writing top-level names to control.egg-info/top_level.txt
+[3.826s] reading manifest file 'control.egg-info/SOURCES.txt'
+[3.842s] writing manifest file 'control.egg-info/SOURCES.txt'
+[3.846s] running build_ext
+[3.847s] Creating /home/ems/Documents/PSD/install/control/lib/python3.10/site-packages/control.egg-link (link to .)
+[3.850s] Installing ball_controller script to /home/ems/Documents/PSD/install/control/lib/control
+[3.851s] Installing ball_perceptor script to /home/ems/Documents/PSD/install/control/lib/control
+[3.851s] Installing demo_kick script to /home/ems/Documents/PSD/install/control/lib/control
+[3.851s] Installing fake_ball_publisher script to /home/ems/Documents/PSD/install/control/lib/control
+[3.851s] 
+[3.852s] Installed /home/ems/Documents/PSD/build/control
+[3.852s] running symlink_data
+[3.940s] Invoked command in '/home/ems/Documents/PSD/build/control' returned '0': PYTHONPATH=/home/ems/Documents/PSD/build/control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ems/Documents/PSD/install/control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ems/Documents/PSD/build/control/build --no-deps symlink_data

@@ -47,7 +47,8 @@ def main(args=None):
         pass
     finally:
         fake_ball_publisher.destroy_node()
-        rclpy.shutdown()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 if __name__ == '__main__':
     main()

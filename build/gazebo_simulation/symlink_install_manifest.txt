@@ -2,6 +2,7 @@
 /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//launch/__pycache__/full_system_clean.launch.cpython-310.pyc
 /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//launch/full_system.launch.py
 /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//launch/full_system_clean.launch.py
+/home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//launch/ros_only.launch.py
 /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//launch/sim_robot.launch.py
 /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//models/ball_hitting_robot/model.config
 /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//models/ball_hitting_robot/model.sdf

@@ -333,8 +333,12 @@ def main(args=None):
     finally:
         # Cleanup
         ball_detector.destroy_node()
-        rclpy.shutdown()
-        cv2.destroyAllWindows()
+        if rclpy.ok():
+            rclpy.shutdown()
+        try:
+            cv2.destroyAllWindows()
+        except Exception:
+            pass
 
 
 if __name__ == '__main__':

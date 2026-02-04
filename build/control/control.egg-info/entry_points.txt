@@ -1,5 +1,6 @@
 [console_scripts]
 ball_controller = control.ball_controller:main
 ball_perceptor = control.ball_perceptor:main
+demo_kick = control.demo_kick:main
 fake_ball_publisher = control.fake_ball_publisher:main
 

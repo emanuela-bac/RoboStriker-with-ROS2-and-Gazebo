@@ -30,9 +30,14 @@ class DemoKick(Node):
             cmd.linear.x = 1.0
         else:
             # stop and exit
-            self.pub.publish(Twist())
-            self.get_logger().info('DemoKick complete, stopping.')
-            rclpy.shutdown()
+            try:
+                if rclpy.ok():
+                    self.pub.publish(Twist())
+            except Exception:
+                pass
+            self.get_logger().info('DemoKick complete, stopping publisher (node stays alive).')
+            # Cancel timer to stop publishing; leave shutdown to main finally
+            self.timer.cancel()
             return
         self.pub.publish(cmd)
 
@@ -46,7 +51,8 @@ def main(args=None):
         pass
     finally:
         node.destroy_node()
-        rclpy.shutdown()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 if __name__ == '__main__':
     main()

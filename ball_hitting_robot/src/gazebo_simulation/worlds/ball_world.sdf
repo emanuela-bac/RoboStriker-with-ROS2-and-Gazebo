@@ -225,5 +225,7 @@
       </link>
     </model>
 
+    <!-- Robot is spawned at runtime by the ROS launch (ros_gz_sim create) -->
+
   </world>
 </sdf>

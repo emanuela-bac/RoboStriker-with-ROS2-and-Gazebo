@@ -379,13 +379,17 @@ def main(args=None):
         # Handle graceful shutdown on Ctrl+C
         pass
     finally:
-        # Send stop command before shutdown
-        stop_cmd = Twist()
-        ball_controller.cmd_vel_publisher.publish(stop_cmd)
+        # Send stop command before shutdown (guard against invalid context)
+        try:
+            if rclpy.ok():
+                ball_controller.cmd_vel_publisher.publish(Twist())
+        except Exception:
+            pass
         
         # Cleanup
         ball_controller.destroy_node()
-        rclpy.shutdown()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 
 if __name__ == '__main__':

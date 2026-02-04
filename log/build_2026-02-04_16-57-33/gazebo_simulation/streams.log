@@ -1,0 +1,32 @@
+[0.798s] Invoking command in '/home/ems/Documents/PSD/build/gazebo_simulation': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ems/ProiectPSD/install:/home/ems/ros2_ws/install/turtlebot3_teleop:/home/ems/ros2_ws/install/turtlebot3_example:/home/ems/ros2_ws/install/circle_drive:/opt/ros/humble /usr/bin/cmake --build /home/ems/Documents/PSD/build/gazebo_simulation -- -j8 -l8
+[1.560s] Invoked command in '/home/ems/Documents/PSD/build/gazebo_simulation' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ems/ProiectPSD/install:/home/ems/ros2_ws/install/turtlebot3_teleop:/home/ems/ros2_ws/install/turtlebot3_example:/home/ems/ros2_ws/install/circle_drive:/opt/ros/humble /usr/bin/cmake --build /home/ems/Documents/PSD/build/gazebo_simulation -- -j8 -l8
+[1.584s] Invoking command in '/home/ems/Documents/PSD/build/gazebo_simulation': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ems/ProiectPSD/install:/home/ems/ros2_ws/install/turtlebot3_teleop:/home/ems/ros2_ws/install/turtlebot3_example:/home/ems/ros2_ws/install/circle_drive:/opt/ros/humble /usr/bin/cmake --install /home/ems/Documents/PSD/build/gazebo_simulation
+[1.604s] -- Install configuration: ""
+[1.605s] -- Execute custom install script
+[1.606s] -- Symlinking: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//launch/__pycache__/full_system.launch.cpython-310.pyc
+[1.632s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//launch/__pycache__/full_system_clean.launch.cpython-310.pyc
+[1.633s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//launch/full_system.launch.py
+[1.636s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//launch/full_system_clean.launch.py
+[1.636s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//launch/ros_only.launch.py
+[1.642s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//launch/sim_robot.launch.py
+[1.642s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//models/ball_hitting_robot/model.config
+[1.642s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//models/ball_hitting_robot/model.sdf
+[1.647s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//models/robot_gz/model.sdf
+[1.649s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//worlds/ball_world.sdf
+[1.650s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation//urdf/robot.urdf
+[1.653s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/ament_index/resource_index/package_run_dependencies/gazebo_simulation
+[1.653s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/ament_index/resource_index/parent_prefix_path/gazebo_simulation
+[1.655s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation/environment/ament_prefix_path.sh
+[1.657s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation/environment/ament_prefix_path.dsv
+[1.659s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation/environment/path.sh
+[1.660s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation/environment/path.dsv
+[1.661s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation/local_setup.bash
+[1.661s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation/local_setup.sh
+[1.662s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation/local_setup.zsh
+[1.662s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation/local_setup.dsv
+[1.664s] -- Symlinking: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation/package.dsv
+[1.693s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/ament_index/resource_index/packages/gazebo_simulation
+[1.696s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation/cmake/gazebo_simulationConfig.cmake
+[1.699s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation/cmake/gazebo_simulationConfig-version.cmake
+[1.699s] -- Up-to-date symlink: /home/ems/Documents/PSD/install/gazebo_simulation/share/gazebo_simulation/package.xml
+[1.707s] Invoked command in '/home/ems/Documents/PSD/build/gazebo_simulation' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ems/ProiectPSD/install:/home/ems/ros2_ws/install/turtlebot3_teleop:/home/ems/ros2_ws/install/turtlebot3_example:/home/ems/ros2_ws/install/circle_drive:/opt/ros/humble /usr/bin/cmake --install /home/ems/Documents/PSD/build/gazebo_simulation

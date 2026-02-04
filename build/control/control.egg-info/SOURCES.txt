@@ -4,6 +4,7 @@ setup.py
 control/__init__.py
 control/ball_controller.py
 control/ball_perceptor.py
+control/demo_kick.py
 control/fake_ball_publisher.py
 control.egg-info/PKG-INFO
 control.egg-info/SOURCES.txt
