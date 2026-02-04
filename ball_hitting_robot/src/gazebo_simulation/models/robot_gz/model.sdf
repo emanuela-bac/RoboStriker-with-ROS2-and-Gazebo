@@ -1,0 +1,150 @@
+<?xml version='1.0'?>
+<sdf version='1.8'>
+  <model name='ball_hitting_robot_gz'>
+    <static>false</static>
+
+    <!-- Minimal visual/collision links copied from URDF to provide
+         a simulation model. For TF/URDF maintain robot_state_publisher. -->
+    <link name='base_link'>
+      <pose>0 0 0.1 0 0 0</pose>
+      <inertial>
+        <mass>20.0</mass>
+      </inertial>
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>0.6 0.4 0.2</size>
+          </box>
+        </geometry>
+      </visual>
+      <collision name='collision'>
+        <geometry>
+          <box>
+            <size>0.6 0.4 0.2</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name='left_wheel'>
+      <pose>-0.15 0.25 0 1.5707963 0 0</pose>
+      <visual name='left_wheel_visual'>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+      </visual>
+      <collision name='left_wheel_collision'>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1.0</mu>
+                <mu2>1.0</mu2>
+              </ode>
+            </friction>
+          </surface>
+      </collision>
+    </link>
+
+    <link name='right_wheel'>
+      <pose>-0.15 -0.25 0 1.5707963 0 0</pose>
+      <visual name='right_wheel_visual'>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+      </visual>
+      <collision name='right_wheel_collision'>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1.0</mu>
+                <mu2>1.0</mu2>
+              </ode>
+            </friction>
+          </surface>
+      </collision>
+    </link>
+
+    <link name='camera_link'>
+      <pose>0.3 0 0.15 0 0 0</pose>
+      <!-- Camera sensor attached below -->
+    </link>
+
+    <!-- Joints (minimal placeholders so diff drive plugin can actuate) -->
+    <joint name='left_wheel_joint' type='revolute'>
+      <parent>base_link</parent>
+      <child>left_wheel</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+
+    <joint name='right_wheel_joint' type='revolute'>
+      <parent>base_link</parent>
+      <child>right_wheel</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+
+    <!-- Camera sensor (Ignition sensor). We request a standard camera with
+         640x480 RGB images at 30Hz. The topic name will follow Ignition's
+         naming convention; ros_gz_bridge will be used to map it to
+         /camera/image_raw and /camera/camera_info in ROS2. -->
+    <link name='camera_link_sensor'>
+      <pose>0.3 0 0.15 0 0 0</pose>
+      <sensor name='camera_sensor' type='camera'>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <camera>
+          <horizontal_fov>1.3962634</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+        </camera>
+        <topic>/camera/image_raw</topic>
+      </sensor>
+    </link>
+
+    <!-- Ignition/Gazebo diff-drive system plugin (found on this host).
+         This system will listen for /cmd_vel and publish odometry.
+         We use the exact library present on the system: libignition-gazebo6-diff-drive-system.so -->
+    <plugin name='ignition::gazebo::systems::DiffDrive' filename='libignition-gazebo6-diff-drive-system.so'>
+      <left_joint>left_wheel_joint</left_joint>
+      <right_joint>right_wheel_joint</right_joint>
+      <wheel_separation>0.5</wheel_separation>
+      <wheel_radius>0.1</wheel_radius>
+      <topic>/cmd_vel</topic>
+      <odom_topic>/odom</odom_topic>
+      <odom_frame>odom</odom_frame>
+      <base_frame>base_link</base_frame>
+    </plugin>
+
+    <!-- Ensure sensors are processed by Gazebo (camera, etc.) -->
+    <plugin name='ignition::gazebo::systems::Sensors' filename='libignition-gazebo6-sensors-system.so'/>
+
+  </model>
+</sdf>

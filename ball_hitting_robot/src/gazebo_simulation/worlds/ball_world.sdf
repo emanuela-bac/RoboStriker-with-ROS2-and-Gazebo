@@ -1,0 +1,229 @@
+<?xml version="1.0" ?>
+<!--
+  Gazebo world file for ball-hitting robot simulation
+  
+  This world includes:
+  - A ground plane
+  - A red ball (sphere) that can be detected by the robot
+  - Proper lighting and physics settings
+  
+  ADJUSTABLE PARAMETERS:
+  
+  1. BALL POSITION: 
+     Change the <pose> tag in the "red_ball" model
+     Format: <pose>x y z roll pitch yaw</pose>
+     Default: <pose>3 0 0.2 0 0 0</pose> means 3m in front of robot
+     
+  2. BALL SIZE:
+     Change the <radius> in the red_ball sphere geometry
+     Default: 0.2m radius
+     
+  3. BALL COLOR:
+     Modify <ambient> and <diffuse> RGBA values in red_ball material
+     Current: Red (1 0 0 1) - change to detect different colors
+     Examples: Blue (0 0 1 1), Green (0 1 0 1), Yellow (1 1 0 1)
+     
+  4. BALL PHYSICS:
+     - <mass>: Affects how hard it is to push (default 0.5 kg)
+     - <mu1>, <mu2>: Friction coefficients (default 1.0)
+     - <kp>, <kd>: Contact stiffness and damping
+-->
+
+<sdf version="1.6">
+  <world name="ball_world">
+    
+    <!-- Physics settings - controls simulation accuracy and speed -->
+    <physics name="default_physics" default="true" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    
+    <!-- Gravity -->
+    <gravity>0 0 -9.8</gravity>
+    
+    <!-- Lighting -->
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Ground plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Red Ball Model 
+         TO CHANGE BALL POSITION:
+         Edit the <pose> values below: <pose>X Y Z roll pitch yaw</pose>
+         - X: Forward/backward distance from origin (+ is forward)
+         - Y: Left/right distance from origin (+ is left, - is right)
+         - Z: Height above ground (keep at ~radius for ball to sit on ground)
+         
+         Default position: 3 meters in front of robot (X=3), centered (Y=0), at ground level (Z=0.2)
+         
+         Try these positions:
+         - Far: <pose>5 0 0.2 0 0 0</pose>
+         - Near: <pose>2 0 0.2 0 0 0</pose>
+         - Left: <pose>3 1 0.2 0 0 0</pose>
+         - Right: <pose>3 -1 0.2 0 0 0</pose>
+    -->
+    <model name="red_ball">
+      <pose>3 0 0.2 0 0 0</pose>
+      <link name="link">
+        <inertial>
+          <!-- Ball mass - increase to make it harder to push -->
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.004</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.004</iyy>
+            <iyz>0</iyz>
+            <izz>0.004</izz>
+          </inertia>
+        </inertial>
+        
+        <collision name="collision">
+          <geometry>
+            <sphere>
+              <!-- Ball size - change radius here -->
+              <radius>0.2</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <!-- Friction coefficients - higher = less sliding -->
+                <mu>1.0</mu>
+                <mu2>1.0</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <!-- Contact stiffness (higher = harder) -->
+                <kp>1000000.0</kp>
+                <!-- Contact damping (higher = less bouncy) -->
+                <kd>100.0</kd>
+                <max_vel>0.01</max_vel>
+                <!-- NOTE: The ball model is now spawned at runtime by the game_manager node
+                     to allow resetting its position when a goal is scored. The static ball
+                     model that used to be here was removed. To customize the initial
+                     spawn pose or model, edit the red_ball model file placed in the
+                     gazebo_simulation/models/red_ball directory or adjust the game_manager
+                     parameters in the control package.
+                -->
+
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <!-- Must match collision radius -->
+              <radius>0.2</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient>
+            <diffuse>1 0 0 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+            <emissive>0.2 0 0 1</emissive>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Goal posts and goal area -->
+    <model name="goal">
+      <static>true</static>
+      <pose>10 0 0 0 0 0</pose>
+      <link name="left_post">
+        <pose>0 1 0.75 0 0 0</pose>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.1 0.1 1.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 0 0 1</ambient>
+            <diffuse>0 0 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <link name="right_post">
+        <pose>0 -1 0.75 0 0 0</pose>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.1 0.1 1.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 0 0 1</ambient>
+            <diffuse>0 0 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <!-- Back of the goal as a visible plane for reference -->
+      <link name="back_plane">
+        <pose>0 0 0.15 0 0 0</pose>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.01 2.5 0.3</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 0.5</ambient>
+            <diffuse>0.8 0.8 0.8 0.5</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>

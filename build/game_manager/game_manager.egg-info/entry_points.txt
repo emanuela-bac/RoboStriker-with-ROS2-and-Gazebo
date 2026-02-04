@@ -1,0 +1,3 @@
+[console_scripts]
+game_manager = game_manager.game_manager:main
+

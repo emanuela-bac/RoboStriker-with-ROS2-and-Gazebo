@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="hitting_arena">
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <model name="ball">
+      <pose>0.8 0 0.05</pose> <link name="ball_link">
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.0001</ixx><ixy>0</ixy><ixz>0</ixz>
+            <iyy>0.0001</iyy><iyz>0</iyz>
+            <izz>0.0001</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <sphere><radius>0.05</radius></sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1.0</mu>
+                <mu2>1.0</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <sphere><radius>0.05</radius></sphere>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient>
+            <diffuse>1 0 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <plugin name="ball_perceptor_plugin" filename="libgazebo_ros_state.so">
+        <ros>
+          <namespace>gazebo</namespace>
+          <argument>model_name</argument>
+          <topic>ball_position_gt</topic>
+        </ros>
+        <update_rate>50.0</update_rate>
+        <is_true_state>true</is_true_state>
+        <model_name>ball</model_name>
+        <pose_frame>world</pose_frame>
+      </plugin>
+    </model>
+
+  </world>
+</sdf>

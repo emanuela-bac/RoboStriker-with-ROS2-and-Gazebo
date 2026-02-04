@@ -1,0 +1,25 @@
+[2.888s] Invoking command in '/home/ems/Documents/PSD/build/perception': PYTHONPATH=/home/ems/Documents/PSD/build/perception/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ems/Documents/PSD/install/perception/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ems/Documents/PSD/build/perception/build --no-deps symlink_data
+[3.513s] running develop
+[4.001s] running egg_info
+[4.001s] creating perception.egg-info
+[4.001s] writing perception.egg-info/PKG-INFO
+[4.001s] writing dependency_links to perception.egg-info/dependency_links.txt
+[4.001s] writing entry points to perception.egg-info/entry_points.txt
+[4.003s] writing requirements to perception.egg-info/requires.txt
+[4.003s] writing top-level names to perception.egg-info/top_level.txt
+[4.003s] writing manifest file 'perception.egg-info/SOURCES.txt'
+[4.007s] reading manifest file 'perception.egg-info/SOURCES.txt'
+[4.009s] writing manifest file 'perception.egg-info/SOURCES.txt'
+[4.013s] running build_ext
+[4.013s] Creating /home/ems/Documents/PSD/install/perception/lib/python3.10/site-packages/perception.egg-link (link to .)
+[4.016s] Installing ball_detector script to /home/ems/Documents/PSD/install/perception/lib/perception
+[4.016s] 
+[4.017s] Installed /home/ems/Documents/PSD/build/perception
+[4.017s] running symlink_data
+[4.018s] creating /home/ems/Documents/PSD/install/perception/share/ament_index
+[4.018s] creating /home/ems/Documents/PSD/install/perception/share/ament_index/resource_index
+[4.018s] creating /home/ems/Documents/PSD/install/perception/share/ament_index/resource_index/packages
+[4.019s] symbolically linking /home/ems/Documents/PSD/build/perception/resource/perception -> /home/ems/Documents/PSD/install/perception/share/ament_index/resource_index/packages
+[4.019s] symbolically linking /home/ems/Documents/PSD/build/perception/package.xml -> /home/ems/Documents/PSD/install/perception/share/perception
+[4.024s] creating /home/ems/Documents/PSD/install/perception/share/perception/launch
+[4.111s] Invoked command in '/home/ems/Documents/PSD/build/perception' returned '0': PYTHONPATH=/home/ems/Documents/PSD/build/perception/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ems/Documents/PSD/install/perception/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ems/Documents/PSD/build/perception/build --no-deps symlink_data
