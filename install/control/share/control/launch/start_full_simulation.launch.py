@@ -1,1 +1,0 @@
-/home/ems/Documents/PSD/build/control/launch/start_full_simulation.launch.py

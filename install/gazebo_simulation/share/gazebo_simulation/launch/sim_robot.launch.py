@@ -1,1 +1,0 @@
-/home/ems/Documents/PSD/ball_hitting_robot/src/gazebo_simulation/launch/sim_robot.launch.py

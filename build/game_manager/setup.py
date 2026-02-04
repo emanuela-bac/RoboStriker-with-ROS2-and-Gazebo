@@ -1,1 +1,0 @@
-/home/ems/Documents/PSD/ball_hitting_robot/src/game_manager/setup.py

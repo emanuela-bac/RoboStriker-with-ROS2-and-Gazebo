@@ -1,3 +1,0 @@
-[console_scripts]
-ball_detector = perception.ball_detector:main
-

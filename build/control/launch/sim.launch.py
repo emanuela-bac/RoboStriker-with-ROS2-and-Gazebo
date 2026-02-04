@@ -1,1 +1,0 @@
-/home/ems/Documents/PSD/ball_hitting_robot/src/control/launch/sim.launch.py

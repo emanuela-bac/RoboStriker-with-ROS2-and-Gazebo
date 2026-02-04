@@ -1,1 +1,0 @@
-/home/ems/Documents/PSD/build/gazebo_simulation/ament_cmake_environment_hooks/local_setup.bash
