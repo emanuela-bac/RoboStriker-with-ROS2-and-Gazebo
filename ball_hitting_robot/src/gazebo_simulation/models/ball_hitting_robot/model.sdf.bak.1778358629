@@ -1,0 +1,340 @@
+<?xml version='1.0'?>
+<sdf version='1.8'>
+  <model name='ball_hitting_robot'>
+    <static>false</static>
+
+    <!-- Chassis -->
+    <link name='base_link'>
+      <pose>0 0 0.25 0 0 0</pose>
+      <inertial>
+        <mass>20.0</mass>
+        <inertia>
+          <!-- Approx inertia for a 0.6 x 0.4 x 0.2 box (kg*m^2) -->
+          <ixx>0.333</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.667</iyy>
+          <iyz>0</iyz>
+          <izz>0.867</izz>
+        </inertia>
+      </inertial>
+      <visual name='base_visual'>
+        <geometry>
+          <box>
+            <size>0.6 0.4 0.2</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.1 0.1 0.1 1</ambient>
+          <diffuse>0.1 0.1 0.1 1</diffuse>
+        </material>
+      </visual>
+      <collision name='base_collision'>
+        <geometry>
+          <box>
+            <size>0.6 0.4 0.2</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.2</mu>
+              <mu2>1.0</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+    <!-- Rear (driven) wheels -->
+    <link name='left_wheel'>
+      <!-- Wheels centered at z=0.12 so they sit on ground (radius=0.12) -->
+      <pose>-0.15 0.50 0.12 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.00347</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00360</iyy>
+          <iyz>0</iyz>
+          <izz>0.00347</izz>
+        </inertia>
+      </inertial>
+      <visual name='left_wheel_visual'>
+        <pose>0 0 0 1.5707963 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.12</radius>
+            <length>0.20</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.2 0.9 1.0 1</ambient>
+          <diffuse>0.2 0.9 1.0 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+          <emissive>0.1 0.4 0.5 1</emissive>
+        </material>
+      </visual>
+      <collision name='left_wheel_collision'>
+        <pose>0 0 0 1.5707963 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.12</radius>
+            <length>0.20</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.0</mu>
+              <mu2>1.0</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+    <link name='right_wheel'>
+      <pose>-0.15 -0.50 0.12 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.00347</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00360</iyy>
+          <iyz>0</iyz>
+          <izz>0.00347</izz>
+        </inertia>
+      </inertial>
+      <visual name='right_wheel_visual'>
+        <pose>0 0 0 1.5707963 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.12</radius>
+            <length>0.20</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>1.0 0.2 0.8 1</ambient>
+          <diffuse>1.0 0.2 0.8 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+          <emissive>0.4 0.1 0.3 1</emissive>
+        </material>
+      </visual>
+      <collision name='right_wheel_collision'>
+        <pose>0 0 0 1.5707963 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.12</radius>
+            <length>0.20</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.0</mu>
+              <mu2>1.0</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+    <!-- Front wheels (fixed to rear wheel links to mimic rotation) -->
+    <link name='front_left_wheel'>
+      <pose>0.15 0.50 0.12 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.00347</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00360</iyy>
+          <iyz>0</iyz>
+          <izz>0.00347</izz>
+        </inertia>
+      </inertial>
+      <visual name='front_left_wheel_visual'>
+        <pose>0 0 0 1.5707963 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.12</radius>
+            <length>0.20</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.2 0.9 1.0 1</ambient>
+          <diffuse>0.2 0.9 1.0 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+          <emissive>0.1 0.4 0.5 1</emissive>
+        </material>
+      </visual>
+      <collision name='front_left_wheel_collision'>
+        <pose>0 0 0 1.5707963 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.12</radius>
+            <length>0.20</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.0</mu>
+              <mu2>1.0</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+    <link name='front_right_wheel'>
+      <pose>0.15 -0.50 0.12 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.00347</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00360</iyy>
+          <iyz>0</iyz>
+          <izz>0.00347</izz>
+        </inertia>
+      </inertial>
+      <visual name='front_right_wheel_visual'>
+        <pose>0 0 0 1.5707963 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.12</radius>
+            <length>0.20</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>1.0 0.2 0.8 1</ambient>
+          <diffuse>1.0 0.2 0.8 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+          <emissive>0.4 0.1 0.3 1</emissive>
+        </material>
+      </visual>
+      <collision name='front_right_wheel_collision'>
+        <pose>0 0 0 1.5707963 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.12</radius>
+            <length>0.20</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.0</mu>
+              <mu2>1.0</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+    <!-- Camera link -->
+    <link name='camera_link'>
+      <pose>0.3 0 0.35 0 0 0</pose>
+      <inertial>
+        <mass>0.2</mass>
+        <inertia>
+          <ixx>0.0001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0001</iyy>
+          <iyz>0</iyz>
+          <izz>0.0001</izz>
+        </inertia>
+      </inertial>
+      <sensor name='camera_sensor' type='camera'>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <camera>
+          <horizontal_fov>1.3962634</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+        </camera>
+        <!-- Publish camera image on /camera/image_raw to match ROS bridge -->
+        <topic>/camera/image_raw</topic>
+      </sensor>
+    </link>
+
+    <!-- Joints -->
+    <joint name='left_wheel_joint' type='revolute'>
+      <parent>base_link</parent>
+      <child>left_wheel</child>
+      <!-- Joint anchor placed at the left wheel center -->
+      <pose>-0.15 0.50 0.12 0 0 0</pose>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e16</lower>
+          <upper>1e16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.1</damping>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <joint name='right_wheel_joint' type='revolute'>
+      <parent>base_link</parent>
+      <child>right_wheel</child>
+      <!-- Joint anchor placed at the right wheel center -->
+      <pose>-0.15 -0.50 0.12 0 0 0</pose>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e16</lower>
+          <upper>1e16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.1</damping>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <!-- Fixed joints to mimic/couple front wheels to the driven rear links -->
+    <joint name='front_left_wheel_fixed' type='fixed'>
+      <parent>left_wheel</parent>
+      <child>front_left_wheel</child>
+    </joint>
+
+    <joint name='front_right_wheel_fixed' type='fixed'>
+      <parent>right_wheel</parent>
+      <child>front_right_wheel</child>
+    </joint>
+
+    <joint name='camera_fixed' type='fixed'>
+      <parent>base_link</parent>
+      <child>camera_link</child>
+    </joint>
+
+  <!-- Ignition/Gazebo diff-drive system plugin (Gazebo 6) -->
+  <plugin name='ignition::gazebo::systems::DiffDrive' filename='libignition-gazebo6-diff-drive-system.so'>
+      <left_joint>left_wheel_joint</left_joint>
+      <right_joint>right_wheel_joint</right_joint>
+      <wheel_separation>1.0</wheel_separation>
+      <wheel_radius>0.12</wheel_radius>
+      <odom_topic>/odom</odom_topic>
+      <odom_frame>odom</odom_frame>
+      <base_frame>base_link</base_frame>
+    </plugin>
+
+  <!-- Ensure sensors (camera) are processed by Gazebo -->
+  <plugin name='ignition::gazebo::systems::Sensors' filename='libignition-gazebo6-sensors-system.so'/>
+
+  </model>
+</sdf>
