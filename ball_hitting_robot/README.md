@@ -149,330 +149,68 @@ ball_hitting_robot/
 ```
 
 ## ⚙️ Configuration Guide
+# RoboStriker
 
-### 1. Changing Ball Position
+RoboStriker is a focused, portfolio-ready ROS 2 + Ignition/Gazebo project that demonstrates a perception-driven differential-drive robot whose goal is to detect and strike a ball in simulation.
 
-Edit: `src/gazebo_simulation/worlds/ball_world.sdf`
+Why this repo is hireable
+- Clear ROS 2 skills: nodes, messages, launch files and topic bridging (ros_gz_bridge)
+- Simulation and model authoring: SDF/URDF, sensors, joints and plugins
+- Perception + control: camera-based detection (OpenCV) and a simple reactive controller
+- Reproducible demo with a short GIF/video you can place at the top of the README
 
-```xml
-<!-- Line ~100: Modify the <pose> tag -->
-<model name="red_ball">
-  <pose>3 0 0.2 0 0 0</pose>  <!-- X Y Z Roll Pitch Yaw -->
-  ...
-</model>
-```
-
-**Examples:**
-- `<pose>3 0 0.2 0 0 0</pose>` - 3m in front (default)
-- `<pose>5 0 0.2 0 0 0</pose>` - 5m in front (farther)
-- `<pose>2 1 0.2 0 0 0</pose>` - 2m front, 1m left
-- `<pose>3 -1 0.2 0 0 0</pose>` - 3m front, 1m right
-
-After changing, rebuild: `colcon build --packages-select gazebo_simulation`
-
-### 2. Adjusting Detection Sensitivity
-
-Edit: `src/perception/perception/ball_detector.py`
-
-```python
-# Line ~85-110: Color detection parameters
-class BallDetector(Node):
-    def __init__(self):
-        # HSV color ranges for RED
-        self.lower_red1 = np.array([0, 100, 100])
-        self.upper_red1 = np.array([10, 255, 255])
-        
-        # Minimum size to detect
-        self.min_contour_area = 500  # Increase to ignore noise
-                                      # Decrease to detect smaller/farther balls
-        
-        # Blur amount (noise reduction)
-        self.blur_kernel = 15  # Increase for more blur
-```
-
-**For different ball colors:**
-
-```python
-# BLUE ball
-self.lower_color = np.array([100, 100, 100])
-self.upper_color = np.array([130, 255, 255])
-
-# GREEN ball
-self.lower_color = np.array([40, 40, 40])
-self.upper_color = np.array([80, 255, 255])
-
-# YELLOW ball
-self.lower_color = np.array([20, 100, 100])
-self.upper_color = np.array([30, 255, 255])
-```
-
-And update the world file to match:
-```xml
-<!-- In ball_world.sdf, change ball color -->
-<ambient>0 0 1 1</ambient>  <!-- Blue -->
-<diffuse>0 0 1 1</diffuse>
-```
-
-After changing, rebuild: `colcon build --packages-select perception`
-
-### 3. Tuning Robot Control Parameters
-
-Edit: `src/control/control/ball_controller.py`
-
-```python
-# Line ~90-115: Control parameters
-class BallController(Node):
-    def __init__(self):
-        # Alignment precision
-        self.alignment_threshold = 0.1  # How centered (0-1)
-        
-        # Speed parameters
-        self.angular_speed_max = 0.5    # Max rotation speed (rad/s)
-        self.linear_speed_base = 0.3    # Base forward speed (m/s)
-        self.linear_speed_max = 0.5     # Max forward speed (m/s)
-        
-        # When to start hitting
-        self.distance_threshold = 0.6   # Distance score (0-1)
-        
-        # Hitting power
-        self.hit_speed = 0.7            # Hit speed (m/s)
-        self.hit_duration = 2.0         # Hit duration (seconds)
-```
-
-**Common adjustments:**
-- **More aggressive approach**: Increase `linear_speed_base` and `linear_speed_max`
-- **More powerful hit**: Increase `hit_speed` and `hit_duration`
-- **More precise alignment**: Decrease `alignment_threshold`
-- **Faster search**: Increase `search_angular_speed`
-
-After changing, rebuild: `colcon build --packages-select control`
-
-### 4. Modifying Robot Model
-
-Edit: `src/gazebo_simulation/urdf/robot.urdf`
-
-```xml
-<!-- Base link dimensions (line ~50) -->
-<geometry>
-  <box size="0.6 0.4 0.2"/>  <!-- Length Width Height -->
-</geometry>
-
-<!-- Wheel parameters (line ~90, ~130) -->
-<cylinder radius="0.1" length="0.05"/>  <!-- Radius Length -->
-
-<!-- Camera field of view (line ~280) -->
-<horizontal_fov>1.3962634</horizontal_fov>  <!-- ~80 degrees -->
-
-<!-- Differential drive settings (line ~310) -->
-<wheel_separation>0.5</wheel_separation>
-<wheel_diameter>0.2</wheel_diameter>
-<max_wheel_torque>20</max_wheel_torque>
-```
-
-After changing, rebuild: `colcon build --packages-select gazebo_simulation`
-
-## 🐛 Debugging
-
-### View Available Topics
+Quick start (short)
 
 ```bash
-# List all topics
-ros2 topic list
-
-# Expected topics:
-# /camera/image_raw     - Camera images
-# /ball_position        - Detected ball position
-# /cmd_vel             - Velocity commands
-# /odom                - Robot odometry
-```
-
-### Monitor Ball Detection
-
-```bash
-# Watch ball position updates
-ros2 topic echo /ball_position
-
-# Output format:
-# x: 0.25    # Horizontal position (-1 to 1)
-# y: -0.1    # Vertical position (-1 to 1)
-# z: 0.45    # Distance score (0 to 1)
-```
-
-### Monitor Robot Commands
-
-```bash
-# Watch velocity commands
-ros2 topic echo /cmd_vel
-
-# Output format:
-# linear.x: 0.3   # Forward speed
-# angular.z: 0.2  # Rotation speed
-```
-
-### Enable Debug Visualization
-
-Edit `ball_detector.py`:
-```python
-# Line ~115
-self.show_debug = True  # Shows camera view with detection overlay
-```
-
-Rebuild and run. A window will show the camera feed with detected ball highlighted.
-
-### Check Node Status
-
-```bash
-# List running nodes
-ros2 node list
-
-# Expected nodes:
-# /ball_detector
-# /ball_controller
-# /robot_state_publisher
-```
-
-### View Node Logs
-
-```bash
-# Ball detector logs
-ros2 run perception ball_detector --ros-args --log-level debug
-
-# Controller logs  
-ros2 run control ball_controller --ros-args --log-level debug
-```
-
-## 🎯 How It Works
-
-### 1. Perception (Ball Detection)
-
-The `ball_detector` node:
-1. Subscribes to `/camera/image_raw`
-2. Converts image to HSV color space
-3. Filters for red color using threshold ranges
-4. Finds contours in the filtered mask
-5. Identifies largest contour as the ball
-6. Calculates ball's position relative to camera center
-7. Publishes position to `/ball_position`
-
-### 2. Control (Navigation)
-
-The `ball_controller` node implements a state machine:
-
-**State: SEARCHING**
-- No ball detected
-- Robot rotates slowly to scan for ball
-- Transitions to ALIGNING when ball detected
-
-**State: ALIGNING**
-- Ball detected but not centered
-- Robot rotates to center ball in view
-- Transitions to APPROACHING when centered
-
-**State: APPROACHING**
-- Ball centered in view
-- Robot moves forward while maintaining alignment
-- Speed increases as ball gets closer
-- Transitions to HITTING when close enough
-
-**State: HITTING**
-- Final push at high speed
-- Duration-based (2 seconds default)
-- Returns to SEARCHING after hit completes
-
-### 3. Robot Model
-
-The robot features:
-- **Differential drive**: Two independently-driven wheels
-- **Caster wheel**: Front support for stability  
-- **Camera**: Front-mounted, publishes RGB images
-- **Pusher**: Front bumper element for hitting ball
-- **Sensors**: Publishes odometry and camera data
-
-## 📊 Topics and Messages
-
-| Topic | Type | Description |
-|-------|------|-------------|
-| `/camera/image_raw` | `sensor_msgs/Image` | Raw camera feed (640x480 RGB) |
-| `/camera/camera_info` | `sensor_msgs/CameraInfo` | Camera calibration data |
-| `/ball_position` | `geometry_msgs/Point` | Detected ball position |
-| `/cmd_vel` | `geometry_msgs/Twist` | Velocity commands to robot |
-| `/odom` | `nav_msgs/Odometry` | Robot odometry (position, velocity) |
-| `/tf` | `tf2_msgs/TFMessage` | Transform tree |
-
-## 🔧 Troubleshooting
-
-### Gazebo doesn't start
-```bash
-# Make sure Gazebo is properly installed
-gz sim --version
-
-# If not installed:
-sudo apt install gz-garden
-```
-
-### Robot doesn't appear in Gazebo
-```bash
-# Check if URDF is valid
-ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_description:="$(cat src/gazebo_simulation/urdf/robot.urdf)"
-
-# Check Gazebo logs
-gz log
-```
-
-### Ball not detected
-- Check ball color matches detection parameters
-- Enable debug visualization: set `show_debug = True` in `ball_detector.py`
-- Verify camera is working: `ros2 topic echo /camera/image_raw`
-- Adjust HSV color ranges in `ball_detector.py`
-
-### Robot doesn't move
-- Check velocity commands: `ros2 topic echo /cmd_vel`
-- Verify controller is running: `ros2 node list`
-- Check for errors: `ros2 node info /ball_controller`
-
-### Build errors
-```bash
-# Clean and rebuild
-rm -rf build install log
-source /opt/ros/humble/setup.bash
+# from repository root
 colcon build --symlink-install
+source install/setup.bash
+ros2 launch gazebo_simulation full_system.launch.py use_demo_kick:=true
 ```
 
-### Import errors (OpenCV)
+This will start Ignition/Gazebo with the demo world, bring up the perception and control nodes and (if enabled) auto-drive the robot toward the ball.
+
+Recording an animated demo (GIF)
+
+Use the provided script to record the screen and convert to a compact GIF. Example (records 8s and crops to a 800x600 region starting at X=100,Y=100):
+
 ```bash
-# Install OpenCV for Python
-pip3 install opencv-python
-# Or system-wide:
-sudo apt install python3-opencv
+chmod +x scripts/capture_demo.sh
+# Record and create GIF
+scripts/capture_demo.sh /tmp/robo_demo.gif 8 100:100:800x600
+
+# Result: /tmp/robo_demo.gif (optimize with gifsicle if desired)
 ```
 
-## 🎓 Learning Resources
+Notes about the script
+- Requires ffmpeg and ImageMagick or gifsicle for optional optimization
+- Uses X11 screen capture; if your session is Wayland, use an XWayland session or alternative recorder (see script header)
 
-- [ROS2 Humble Documentation](https://docs.ros.org/en/humble/)
-- [Gazebo Documentation](https://gazebosim.org/docs)
-- [OpenCV Python Tutorials](https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html)
-- [URDF Tutorial](http://wiki.ros.org/urdf/Tutorials)
+Repository layout (short)
 
-## 📝 License
+```
+.
+├── src/
+│   ├── gazebo_simulation/   # SDF models, world, launch files
+│   ├── perception/          # ball_detector node (OpenCV)
+│   └── control/             # controller and demo_kick
+├── scripts/
+│   └── capture_demo.sh      # Record & convert demo to GIF
+└── README.md
+```
 
-Apache License 2.0
+What to include in your portfolio page
+- A short GIF (use the script) placed at the top of the README
+- A one-paragraph "What I built / What I learned" section
+- Tech stack bullets (ROS 2, Ignition/Gazebo, OpenCV, CI)
+- A minimal smoke-test command (headless launch + a topic-check script)
 
-## 🤝 Contributing
+License
 
-This is an educational project. Feel free to modify and extend it for your needs!
+Choose a permissive license (MIT recommended) and add a LICENSE file.
 
-## ✨ Features to Add
-
-Some ideas for extending this project:
-- [ ] Add obstacle avoidance
-- [ ] Multiple ball detection and targeting
-- [ ] Path planning (not just reactive control)
-- [ ] Deep learning-based detection (YOLO)
-- [ ] Kick mechanism (articulated joint)
-- [ ] Multiple robots competing
-- [ ] Score tracking system
-- [ ] Different ball types (bouncy, heavy, etc.)
-
----
-
-**Enjoy your ball-hitting robot! 🤖⚽**
+Want me to:
+- add a short architecture diagram (SVG) and an example GIF at the top of the README
+- create a tiny GitHub Actions job that runs a headless smoke-test on push
+If so, say which you'd like first and I will add it.
+After changing, rebuild: `colcon build --packages-select perception`
